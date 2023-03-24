@@ -111,6 +111,8 @@ X = scaler_x.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
+jetonapi = "$trotskitueleski1917"
+
 # Random Forest
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
