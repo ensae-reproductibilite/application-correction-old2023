@@ -37,13 +37,13 @@ def import_yaml_config(location: str) -> dict:
 config = import_yaml_config("config.yaml")
 if os.path.exists('secrets.yaml'):
     secrets = import_yaml_config("secrets.yaml")
+    API_TOKEN = secrets["api"]['token']
 
 
 # Number trees as command line argument
 N_TREES = int(sys.argv[1]) if len(sys.argv) == 2 else 20
 
 
-API_TOKEN = secrets["api"]['token']
 LOCATION_TRAIN = config['path']['train']
 LOCATION_TEST = config['path']['test']
 TEST_FRACTION = config['model']['test_fraction']
