@@ -33,8 +33,10 @@ def import_yaml_config(location: str) -> dict:
 
 # PARAMETRES -------------------------------
 
-secrets = import_yaml_config("secrets.yaml")
 config = import_yaml_config("config.yaml")
+if os.path.exists('secrets.yaml'):
+    secrets = import_yaml_config("secrets.yaml")
+
 
 # Number trees as command line argument
 N_TREES = int(sys.argv[1]) if len(sys.argv) == 2 else 20
