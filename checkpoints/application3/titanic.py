@@ -5,6 +5,7 @@ Prediction de la survie d'un individu sur le Titanic
 # GESTION ENVIRONNEMENT --------------------------------
 
 import sys
+import os
 import yaml
 import pandas as pd
 import matplotlib.pyplot as plt
