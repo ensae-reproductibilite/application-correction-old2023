@@ -9,8 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 import time
 
 import os
-#print(os.getcwd())
-os.chdir('/home/coder/work/ensae-reproductibilite-application')
 
 TrainingData = pd.read_csv('train.csv')
 TestData = pd.read_csv('test.csv')
@@ -27,6 +25,8 @@ TrainingData.isnull().sum()
 TestData.isnull().sum()
 
 ## Un peu d'exploration et de feature engineering
+
+import seaborn as sns
 
 ### Statut socioéconomique
 
@@ -111,9 +111,7 @@ X = scaler_x.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
-
 jetonapi = "$trotskitueleski1917"
-
 
 # Random Forest
 
@@ -137,3 +135,4 @@ print("{} % de bonnes réponses sur les données de test pour validation (résul
 from sklearn.metrics import confusion_matrix
 print("matrice de confusion")
 confusion_matrix(y_test, rdmf.predict(X_test))
+
