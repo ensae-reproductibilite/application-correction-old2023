@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "titanicml"
+version = "0.0.1"
+authors = [
+  { name="Lino Galiana", email="lino.galiana@insee.fr" },
+]
+description = "Impressive machine learning project"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OPEN LICENCE 2.0/LICENCE OUVERTE 2.0",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+titanicml = ["*.yaml"]
+
+
+[project.urls]
+"Homepage" = "https://github.com/linogaliana/ensae-reproductibilite-application"
+"Bug Tracker" = "https://github.com/linogaliana/ensae-reproductibilite-application"
