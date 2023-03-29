@@ -1,1 +1,4 @@
 secrets.yaml
+
+data/
+__pycache__
