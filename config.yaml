@@ -1,0 +1,5 @@
+path:
+  train: train.csv
+  test: test.csv
+model:
+  test_fraction: 0.1
