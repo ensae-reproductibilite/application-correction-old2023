@@ -7,16 +7,17 @@ Prediction de la survie d'un individu sur le Titanic
 import sys
 import os
 
-import import_data as imp
-import build_features as bf
-import train_evaluate as te
+import src.data.import_data as imp
+import src.features.build_features as bf
+import src.models.train_evaluate as te
 
 
 # PARAMETRES -------------------------------
 
-config = imp.import_yaml_config("config.yaml")
-if os.path.exists('secrets.yaml'):
-    secrets = imp.import_yaml_config("secrets.yaml")
+config = imp.import_yaml_config("configuration/config.yaml")
+path_secrets_yaml = "configuration/secrets.yaml"
+if os.path.exists(path_secrets_yaml):
+    secrets = imp.import_yaml_config(path_secrets_yaml)
     API_TOKEN = secrets["api"]['token']
 
 # Number trees as command line argument
