@@ -7,10 +7,10 @@ import pathlib
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 import time
-
+import seaborn as sns
 import os
 #print(os.getcwd())
-os.chdir('/home/coder/work/ensae-reproductibilite-application')
+
 
 TrainingData = pd.read_csv('train.csv')
 TestData = pd.read_csv('test.csv')
