@@ -1,5 +1,5 @@
 path:
-  train: data/raw/train.csv
-  test: data/raw/test.csv
+  train: https://minio.lab.sspcloud.fr/lgaliana/ensae-reproductibilite/data/raw/train.csv
+  test: https://minio.lab.sspcloud.fr/lgaliana/ensae-reproductibilite/data/raw/test.csv
 model:
   test_fraction: 0.1
