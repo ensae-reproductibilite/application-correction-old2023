@@ -21,9 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
           pip install -r requirements.txt
-      - name: Lint with ruff
+      - name: Lint
         run: |
-          # Lint
           pylint src --fail-under=6
       - name: Test workflow
         run: |
