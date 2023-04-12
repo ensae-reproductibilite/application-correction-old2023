@@ -27,4 +27,4 @@ jobs:
           pylint src --fail-under=6
       - name: Test workflow
         run: |
-          pytest
+          python main.py
