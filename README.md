@@ -1,4 +1,6 @@
-# Probabilité de survie sur le Titanic
+# Probabilité de survie sur le Titanic 
+[![Production de l'image Docker](https://github.com/ensae-reproductibilite/application-correction/actions/workflows/docker.yml/badge.svg)](https://github.com/ensae-reproductibilite/application-correction/actions/workflows/docker.yml)
+
 
 Pour pouvoir utiliser ce projet, il 
 est nécessaire de créer un fichier `secrets.yaml`
