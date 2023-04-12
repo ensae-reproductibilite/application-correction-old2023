@@ -1,4 +1,4 @@
-name: Docker build
+name: Production de l'image Docker
 
 on: [push]
 
