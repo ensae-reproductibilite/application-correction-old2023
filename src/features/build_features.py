@@ -5,10 +5,8 @@ from sklearn.preprocessing import LabelEncoder
 
 
 def fill_na_column(
-    data: pd.DataFrame,
-    column: str = "Age",
-    value: float = 0.0
-) -> pd.DataFrame :
+    data: pd.DataFrame, column: str = "Age", value: float = 0.0
+) -> pd.DataFrame:
     """Imputation for a given column
 
     Args:
@@ -22,9 +20,7 @@ def fill_na_column(
     return data
 
 
-def fill_na_titanic(
-    data: pd.DataFrame
-) -> pd.DataFrame:
+def fill_na_titanic(data: pd.DataFrame) -> pd.DataFrame:
     """Pipeline of imputations
 
     Args:
@@ -61,8 +57,7 @@ def label_encoder_titanic_column(
         pd.DataFrame: Titanic with column encoded
     """
     label_encoder_column = LabelEncoder()
-    data[column] = \
-        label_encoder_column.fit_transform(data[column].values)
+    data[column] = label_encoder_column.fit_transform(data[column].values)
 
     return data
 

@@ -1,14 +1,16 @@
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, LabelEncoder, OneHotEncoder
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+
 
 def split_train_test_titanic(
-    data: pd.DataFrame,
-    y_index: int = 0,
-    fraction_test: float = 0.1):
+    data: pd.DataFrame, y_index: int = 0, fraction_test: float = 0.1
+):
     """Split Titanic dataset in train and test sets
 
     Args:
@@ -22,22 +24,15 @@ def split_train_test_titanic(
         Four elements : X_train, X_test, y_train, y_test
     """
 
-    y = data.iloc[:, y_index].values
-    X = data.iloc[:, 1:12].values
+    train = data.sample(frac=1 - fraction_test, random_state=435)
+    test = data.drop(train.index)
 
-    # Feature Scaling
-    scaler_x = MinMaxScaler((-1, 1))
-    X = scaler_x.fit_transform(X)
+    return train, test
 
-    X_train, X_test, y_train, y_test = \
-        train_test_split(X, y, test_size=fraction_test)
-
-    return X_train, X_test, y_train, y_test
 
 def random_forest_titanic(
-    data: pd.DataFrame,
-    fraction_test: float = 0.9,
-    n_trees: int = 20):
+    data: pd.DataFrame, fraction_test: float = 0.9, n_trees: int = 20
+):
     """Random forest model for Titanic survival
 
     Args:
@@ -49,26 +44,43 @@ def random_forest_titanic(
         _type_: _description_
     """
 
-    X_train, X_test, y_train, y_test = \
-    split_train_test_titanic(
-        data,
-        fraction_test=fraction_test
+    data[["Sex", "Title", "Embarked"]] = data[["Sex", "Title", "Embarked"]].astype(
+        "str"
     )
 
-    rdmf = RandomForestClassifier(n_estimators=n_trees)
-    rdmf.fit(X_train, y_train)
+    numeric_features = ["Age", "Fare"]
+    categorical_features = ["Title", "Embarked", "Sex"]
 
-    # calculons le score sur le dataset d'apprentissage et sur le dataset de test
-    # (10% du dataset d'apprentissage mis de côté)
-    # le score étant le nombre de bonne prédiction
-    rdmf_score = rdmf.score(X_test, y_test)
-    print(
-        f"{round(rdmf_score * 100)} % de bonnes réponses sur les données de test pour validation \
-            (résultat qu'on attendrait si on soumettait notre prédiction \
-                sur le dataset de test.csv)"
+    numeric_transformer = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", MinMaxScaler()),
+        ]
     )
 
-    print("matrice de confusion")
-    confusion_matrix(y_test, rdmf.predict(X_test))
+    categorical_transformer = Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("onehot", OneHotEncoder()),
+        ]
+    )
 
-    return rdmf, X_train, X_test, y_train, y_test
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("Preprocessing numerical", numeric_transformer, numeric_features),
+            (
+                "Preprocessing categorical",
+                categorical_transformer,
+                categorical_features,
+            ),
+        ]
+    )
+
+    pipe = Pipeline(
+        [
+            ("preprocessor", preprocessor),
+            ("classifier", RandomForestClassifier(n_estimators=n_trees)),
+        ]
+    )
+
+    return pipe
