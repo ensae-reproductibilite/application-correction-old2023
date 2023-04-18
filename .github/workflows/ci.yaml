@@ -39,8 +39,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: PeDiot/application-correction:latest
+          tags: pediot/application-correction:latest
 
 
 
-          
+
