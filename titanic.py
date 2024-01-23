@@ -7,10 +7,8 @@ import pathlib
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 import time
-
+import seaborn as sns
 import os
-#print(os.getcwd())
-os.chdir('/home/coder/work/ensae-reproductibilite-application')
 
 
 TrainingData = pd.read_csv('train.csv')
@@ -58,7 +56,8 @@ fig2_title = sns.barplot(data=TrainingData, x='Title',y='Survived', ax=axes[1]).
 
 ### Age
 
-sns.distplot(a= TrainingData['Age'].dropna(axis = 0),bins = 15,hist_kws={'rwidth'     :0.7}).set_title("distribution de l'age")
+sns.histplot(data= TrainingData, x='Age',bins=15, kde=False    )    .set_title("Distribution de l'âge")
+plt.show()
 
 ## Encoder les données imputées ou transformées.
 
