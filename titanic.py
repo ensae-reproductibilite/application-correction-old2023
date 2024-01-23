@@ -80,9 +80,10 @@ fig2_title = sns.barplot(
 ).set_title("Taux de survie des titres")
 
 # Age
-sns.distplot(
-    a=TrainingData["Age"].dropna(axis=0), bins=15, hist_kws={"rwidth": 0.7}
-).set_title("distribution de l'age")
+sns.histplot(
+    data=TrainingData, x='Age', bins=15, kde=False
+).set_title("Distribution de l'âge")
+plt.show()
 
 
 ## IMPUTATION DES VARIABLES ================
