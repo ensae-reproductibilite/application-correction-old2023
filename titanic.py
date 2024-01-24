@@ -4,6 +4,9 @@ Prediction de la survie d'un individu sur le Titanic
 
 # GESTION ENVIRONNEMENT --------------------------------
 
+import os
+import argparse
+import yaml
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -14,12 +17,36 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 
-jetonapi = "$trotskitueleski1917"
+parser = argparse.ArgumentParser(description="Paramètres du random forest")
+parser.add_argument(
+    "--n_trees", type=int, default=20, help="Nombre d'arbres"
+)
+args = parser.parse_args()
+
+n_trees = args.n_trees
+
+# FONCTIONS --------------------
+
+def import_yaml_config(filename: str = "toto.yaml") -> dict:
+    dict_config = {}
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as stream:
+            dict_config = yaml.safe_load(stream)
+    return dict_config
+
+config = import_yaml_config("config.yaml")
+
+API_TOKEN = config.get("jeton_api")
+TRAIN_PATH = config.get("train_path", "train.csv")
+TEST_PATH = config.get("test_path", "test.csv")
+TEST_FRACTION = config.get("test_fraction", .1)
+
+
 
 # IMPORT ET EXPLORATION DONNEES --------------------------------
 
-TrainingData = pd.read_csv("train.csv")
-TestData = pd.read_csv("test.csv")
+TrainingData = pd.read_csv(TRAIN_PATH)
+TestData = pd.read_csv(TEST_PATH)
 TrainingData = TrainingData.drop(columns="PassengerId")
 TestData = TestData.drop(columns="PassengerId")
 
@@ -137,14 +164,14 @@ X = scaler_x.fit_transform(X)
 # On _split_ notre _dataset_ d'apprentisage pour faire de la validation croisée
 # Prenons arbitrairement 10% du dataset en test et 90% pour l'apprentissage.
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_FRACTION)
 
 
 # MODELISATION: RANDOM FOREST ----------------------------
 
 
 # Ici demandons d'avoir 20 arbres
-rdmf = RandomForestClassifier(n_estimators=20)
+rdmf = RandomForestClassifier(n_estimators=n_trees)
 rdmf.fit(X_train, y_train)
 
 
