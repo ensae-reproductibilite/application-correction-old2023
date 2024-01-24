@@ -2,6 +2,7 @@ import os
 import yaml
 import pandas as pd
 
+
 def import_yaml_config(filename: str = "toto.yaml") -> dict:
     dict_config = {}
     if os.path.exists(filename):
@@ -10,7 +11,7 @@ def import_yaml_config(filename: str = "toto.yaml") -> dict:
     return dict_config
 
 
-def import_data(path: str) -> pd.DataFrame :
+def import_data(path: str) -> pd.DataFrame:
     """Import Titanic datasets
     Args:
         path (str): File location

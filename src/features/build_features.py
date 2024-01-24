@@ -1,9 +1,8 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-def create_variable_title(
-    data: pd.DataFrame,
-    variable_name: str = "Name"):
+
+def create_variable_title(data: pd.DataFrame, variable_name: str = "Name"):
     """Transform name into title
     Args:
         data (pd.DataFrame): Dataset that should be modified
@@ -12,15 +11,9 @@ def create_variable_title(
         _type_: DataFrame with a title column
     """
 
-    data["Title"] = (
-        data[variable_name]
-        .str.split(",").str[1]
-        .str.split().str[0]
-    )
+    data["Title"] = data[variable_name].str.split(",").str[1].str.split().str[0]
 
-    data.drop(
-        labels=variable_name, axis=1, inplace=True
-    )
+    data.drop(labels=variable_name, axis=1, inplace=True)
 
     # Dona est présent dans le jeu de test à prédire mais
     # pas dans les variables d'apprentissage -> corrige
@@ -30,10 +23,8 @@ def create_variable_title(
 
 
 def fill_na_column(
-    data: pd.DataFrame,
-    column: str = "Age",
-    value: float = 0.0
-) -> pd.DataFrame :
+    data: pd.DataFrame, column: str = "Age", value: float = 0.0
+) -> pd.DataFrame:
     """Imputation for a given column
     Args:
         data (pd.DataFrame): Dataset that should be modified
@@ -45,9 +36,7 @@ def fill_na_column(
     return data
 
 
-def fill_na_titanic(
-    data: pd.DataFrame
-) -> pd.DataFrame:
+def fill_na_titanic(data: pd.DataFrame) -> pd.DataFrame:
     """Pipeline of imputations
     Args:
         data (pd.DataFrame): Titanic dataframe
@@ -80,8 +69,7 @@ def label_encoder_titanic_column(
         pd.DataFrame: Titanic with column encoded
     """
     label_encoder_column = LabelEncoder()
-    data[column] = \
-        label_encoder_column.fit_transform(data[column].values)
+    data[column] = label_encoder_column.fit_transform(data[column].values)
 
     return data
 

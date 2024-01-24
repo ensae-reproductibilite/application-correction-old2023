@@ -5,10 +5,10 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 
+
 def split_train_test_titanic(
-    data: pd.DataFrame,
-    y_index: int = 0,
-    fraction_test: float = 0.1):
+    data: pd.DataFrame, y_index: int = 0, fraction_test: float = 0.1
+):
     """Split Titanic dataset in train and test sets
     Args:
         data (pd.DataFrame): Titanic dataset
@@ -27,15 +27,14 @@ def split_train_test_titanic(
     scaler_x = MinMaxScaler((-1, 1))
     X = scaler_x.fit_transform(X)
 
-    X_train, X_test, y_train, y_test = \
-        train_test_split(X, y, test_size=fraction_test)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=fraction_test)
 
     return X_train, X_test, y_train, y_test
 
+
 def random_forest_titanic(
-    data: pd.DataFrame,
-    fraction_test: float = 0.9,
-    n_trees: int = 20):
+    data: pd.DataFrame, fraction_test: float = 0.9, n_trees: int = 20
+):
     """Random forest model for Titanic survival
     Args:
         data (pd.DataFrame): _description_
@@ -45,10 +44,8 @@ def random_forest_titanic(
         _type_: _description_
     """
 
-    X_train, X_test, y_train, y_test = \
-    split_train_test_titanic(
-        data,
-        fraction_test=fraction_test
+    X_train, X_test, y_train, y_test = split_train_test_titanic(
+        data, fraction_test=fraction_test
     )
 
     rdmf = RandomForestClassifier(n_estimators=n_trees)

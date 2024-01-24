@@ -4,20 +4,10 @@ Prediction de la survie d'un individu sur le Titanic
 
 # GESTION ENVIRONNEMENT --------------------------------
 
-import os
 import argparse
-import yaml
-import pandas as pd
-import matplotlib.pyplot as plt
-
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix
-
-import import_data as imp
-import build_features as bf
-import train_evaluate as te
+import src.data.import_data as imp
+import src.features.build_features as bf
+import src.models.train_evaluate as te
 
 
 
@@ -31,7 +21,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Paramètres YAML
-config = imp.import_yaml_config("config.yaml")
+config = imp.import_yaml_config("configuration/config.yaml")
 API_TOKEN = config.get("jeton_api")
 LOCATION_TRAIN = config.get("train_path", "train.csv")
 LOCATION_TEST = config.get("test_path", "test.csv")
@@ -45,12 +35,11 @@ TrainingData = imp.import_data(LOCATION_TRAIN)
 TestData = imp.import_data(LOCATION_TEST)
 
 # Create a 'Title' variable
-TrainingData = imp.create_variable_title(TrainingData)
-TestData = imp.create_variable_title(TestData)
+TrainingData = bf.create_variable_title(TrainingData)
+TestData = bf.create_variable_title(TestData)
 
 
 ## IMPUTATION DES VARIABLES ================
-
 
 TrainingData = bf.fill_na_titanic(TrainingData)
 TestData = bf.fill_na_titanic(TestData)
@@ -65,7 +54,6 @@ TestData = bf.check_has_cabin(TestData)
 
 TrainingData = bf.ticket_length(TrainingData)
 TestData = bf.ticket_length(TestData)
-
 
 
 # MODELISATION: RANDOM FOREST ----------------------------
