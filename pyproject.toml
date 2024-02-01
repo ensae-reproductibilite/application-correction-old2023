@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "titanicml"
+version = "0.0.1"
+description = "Awesome Machine Learning project"
+authors = ["Daffy Duck <daffy.duck@fauxmail.fr>", "Mickey Mouse"]
+license = "MIT"
+readme = "README.md"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "WARNING"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
