@@ -23,8 +23,8 @@ args = parser.parse_args()
 # Paramètres YAML
 config = imp.import_yaml_config("configuration/config.yaml")
 API_TOKEN = config.get("jeton_api")
-LOCATION_TRAIN = config.get("train_path", "train.csv")
-LOCATION_TEST = config.get("test_path", "test.csv")
+LOCATION_TRAIN = config.get("train_path", "data/raw/train.csv")
+LOCATION_TEST = config.get("test_path", "data/raw/test.csv")
 TEST_FRACTION = config.get("test_fraction", .1)
 N_TREES = args.n_trees
 
