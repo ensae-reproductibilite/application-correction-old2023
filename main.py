@@ -6,6 +6,7 @@ Prediction de la survie d'un individu sur le Titanic
 
 import argparse
 from sklearn.metrics import confusion_matrix
+from joblib import dump
 
 import src.data.import_data as imp
 import src.features.build_features as bf
@@ -39,15 +40,6 @@ TestData = imp.import_data(LOCATION_TEST)
 # Create a 'Title' variable
 TrainingData = bf.create_variable_title(TrainingData)
 TestData = bf.create_variable_title(TestData)
-
-
-## IMPUTATION DES VARIABLES ================
-
-TrainingData = bf.fill_na_titanic(TrainingData)
-TestData = bf.fill_na_titanic(TestData)
-
-TrainingData = bf.label_encoder_titanic(TrainingData)
-TestData = bf.label_encoder_titanic(TestData)
 
 
 # Making a new feature hasCabin which is 1 if cabin is available else 0
