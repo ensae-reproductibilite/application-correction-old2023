@@ -7,9 +7,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
 
-def split_train_test_titanic(
-    data: pd.DataFrame, fraction_test: float = 0.1
-):
+def split_train_test_titanic(data: pd.DataFrame, fraction_test: float = 0.1):
     """Split Titanic dataset in train and test sets
 
     Args:
@@ -29,9 +27,7 @@ def split_train_test_titanic(
     return train, test
 
 
-def build_pipeline(
-    n_trees: int = 20
-):
+def build_pipeline(n_trees: int = 20):
     """Random forest model for Titanic survival
 
     Args:
