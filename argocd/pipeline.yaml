@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ensae-mlops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ensae-reproductibilite/application-correction.git
+    targetRevision: test15
+    path: deployment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: user-lgaliana
+  syncPolicy:
+    automated:
+      selfHeal: true
