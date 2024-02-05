@@ -1,6 +1,5 @@
 import pandas as pd
 
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
@@ -9,7 +8,7 @@ from sklearn.compose import ColumnTransformer
 
 
 def split_train_test_titanic(
-    data: pd.DataFrame, y_index: int = 0, fraction_test: float = 0.1
+    data: pd.DataFrame, fraction_test: float = 0.1
 ):
     """Split Titanic dataset in train and test sets
 
