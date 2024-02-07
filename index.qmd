@@ -1,0 +1,69 @@
+---
+title: "Jake avait-il une chance de survivre ?"
+echo: false
+---
+
+Grâce à notre modèle, on peut répondre à cette question cruciale: 
+
+__Jake était-il condamné dès le début ?__
+
+```{ojs}
+viewof gender = Inputs.radio(
+    new Map([
+        ["Jake", "male"], 
+        ["Rose", "female"]
+    ]), 
+    {
+        value: "male", 
+        label: html`<b>Personnage</b>`,
+        format: ([name, value]) => {
+            let imageUrl = value == "male" ? 
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM_MvbRXood7sNkM9z5OEVk_AeIhmWwLon1vvBuIYjOpCD394wNGdoAYloymicchUpgZU&usqp=CAU" : 
+                "https://static1.purebreak.com/articles/4/18/97/24/@/705016-titanic-decouvrez-quelle-autre-actrice-diapo-3.jpg";
+            return html`<div style="text-align: center;">
+                            <span style="display: block; text-transform: capitalize;">${value == "male" ? "Jake" : "Rose"}</span>
+                            <img src="${imageUrl}" style="width: 200px; height: auto; display: block; margin: 0 auto;">
+                        </div>`;
+        }
+    }
+)
+```
+
+
+```{ojs}
+viewof age = Inputs.range([0, 100], {step: 1, value: 19, label: "Âge au moment de l'accident"})
+```
+
+```{ojs}
+viewof class_boat = Inputs.radio(
+    new Map([["Première", 1], ["Deuxième", 2], ["Troisième", 3]]),
+    {value: default_class, label: "Classe sur le bateau"}
+)
+```
+
+<br>
+
+__Prédiction de notre modèle__:
+
+```{ojs}
+d3.json(prediction)
+```
+
+```{ojs}
+prediction = `https://titanic.kub.sspcloud.fr/predict?pclass=${class_boat}&sex=${gender}&age=${age}&sib_sp=1&parch=1&fare=16.5&embarked=S&title=${title}&has_cabin=1&ticket_len=7`
+```
+
+```{ojs}
+title = gender == "male" ? "Mr." : "Miss."
+```
+
+```{ojs}
+default_class = gender == "male" ? 3 : 1
+```
+
+
+## Documentation de l'API
+
+Retrouver l'API sur [https://titanic.kub.sspcloud.fr/docs](https://titanic.kub.sspcloud.fr/docs) pour jouer avec
+d'autres exemples. 
+
