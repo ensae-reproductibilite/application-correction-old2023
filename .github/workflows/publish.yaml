@@ -1,4 +1,4 @@
-name: Publish slides
+name: Publish website
 
 on: 
   push:

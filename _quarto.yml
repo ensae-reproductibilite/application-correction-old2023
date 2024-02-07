@@ -1,5 +1,15 @@
 project:
-  title: "website"
+  type: website
 
+website:
+  title: "Mysite"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
 
-
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

@@ -5,3 +5,4 @@ model.joblib
 /.quarto/
 *.html
 *_files
+_site/
