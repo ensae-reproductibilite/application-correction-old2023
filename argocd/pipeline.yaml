@@ -6,7 +6,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ensae-reproductibilite/application-correction.git
-    targetRevision: test15
+    targetRevision: dev
     path: deployment
   destination:
     server: https://kubernetes.default.svc
