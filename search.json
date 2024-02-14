@@ -1,19 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Jake avait-il une chance de survivre ?",
-    "section": "",
-    "text": "Grâce à notre modèle, on peut répondre à cette question cruciale:\nJake était-il condamné dès le début ?\nviewof gender = Inputs.radio(\n    new Map([\n        [\"Jake\", \"male\"], \n        [\"Rose\", \"female\"]\n    ]), \n    {\n        value: \"male\", \n        label: html`&lt;b&gt;Personnage&lt;/b&gt;`,\n        format: ([name, value]) =&gt; {\n            let imageUrl = value == \"male\" ? \n                \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM_MvbRXood7sNkM9z5OEVk_AeIhmWwLon1vvBuIYjOpCD394wNGdoAYloymicchUpgZU&usqp=CAU\" : \n                \"https://static1.purebreak.com/articles/4/18/97/24/@/705016-titanic-decouvrez-quelle-autre-actrice-diapo-3.jpg\";\n            return html`&lt;div style=\"text-align: center;\"&gt;\n                            &lt;span style=\"display: block; text-transform: capitalize;\"&gt;${value == \"male\" ? \"Jake\" : \"Rose\"}&lt;/span&gt;\n                            &lt;img src=\"${imageUrl}\" style=\"width: 200px; height: auto; display: block; margin: 0 auto;\"&gt;\n                        &lt;/div&gt;`;\n        }\n    }\n)\nviewof age = Inputs.range([0, 100], {step: 1, value: 19, label: \"Âge au moment de l'accident\"})\nviewof class_boat = Inputs.radio(\n    new Map([[\"Première\", 1], [\"Deuxième\", 2], [\"Troisième\", 3]]),\n    {value: default_class, label: \"Classe sur le bateau\"}\n)\nPrédiction de notre modèle:\nd3.json(prediction)\nprediction = `https://titanic.kub.sspcloud.fr/predict?pclass=${class_boat}&sex=${gender}&age=${age}&sib_sp=1&parch=1&fare=16.5&embarked=S&title=${title}&has_cabin=1&ticket_len=7`\ntitle = gender == \"male\" ? \"Mr.\" : \"Miss.\"\ndefault_class = gender == \"male\" ? 3 : 1"
-  },
-  {
-    "objectID": "index.html#documentation-de-lapi",
-    "href": "index.html#documentation-de-lapi",
-    "title": "Jake avait-il une chance de survivre ?",
-    "section": "Documentation de l’API",
-    "text": "Documentation de l’API\nRetrouver l’API sur https://titanic.kub.sspcloud.fr/docs pour jouer avec d’autres exemples."
-  },
-  {
     "objectID": "notebooks/titanic.html",
     "href": "notebooks/titanic.html",
     "title": "Prediction de la survie d’un individu sur le Titanic 🚢",
@@ -54,5 +40,19 @@
     "title": "Prediction de la survie d’un individu sur le Titanic 🚢",
     "section": "",
     "text": "On va maintenant passer du monde Pandas au monde Numpy pour servir d’input à l’apprentissage pour cela on isole la variable cible\n::: {#cell-31 .cell _cell_guid=‘6ef57b0c-9723-4f40-b8c3-e2be60784f91’ _uuid=‘9401c53ce8a950e7aebf3fbf62faf29c5788bf65’ tags=‘[]’ execution_count=59}\nTrainingData.drop(labels='Cabin', axis=1, inplace=True)\nTestData.drop(labels='Cabin', axis=1, inplace=True)\ny = TrainingData.iloc[:, 0].values\nX = TrainingData.iloc[:, 1:12].values\n:::\n::: {#cell-32 .cell _cell_guid=‘d0b132d9-ecae-4ea0-b5f1-64fc90b8a358’ _uuid=‘6787d0472b874437a300ac0d32e20eb3c666de09’ tags=‘[]’ execution_count=62}\n# Feature Scaling\nscaler_x = MinMaxScaler((-1,1))\nX = scaler_x.fit_transform(X)\n:::\nOn split notre dataset d’apprentisage pour faire de la validation croisée une partie pour apprendre une partie pour regarder le score.\nPrenons arbitrairement 10% du dataset en test et 90% pour l’apprentissage.\n::: {#cell-34 .cell _cell_guid=‘b768a96d-8f55-440f-b268-26fb613acc59’ _uuid=‘dfcfa465aa94260c2db0a6c87c9dea05cc0c45de’ tags=‘[]’ execution_count=63}\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)\n:::\n\njetonapi = \"$trotskitueleski1917\""
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Jake avait-il une chance de survivre ?",
+    "section": "",
+    "text": "Grâce à notre modèle, on peut répondre à cette question cruciale:\nJake était-il condamné dès le début ?\nviewof gender = Inputs.radio(\n    new Map([\n        [\"Jake\", \"male\"], \n        [\"Rose\", \"female\"]\n    ]), \n    {\n        value: \"male\", \n        label: html`&lt;b&gt;Personnage&lt;/b&gt;`,\n        format: ([name, value]) =&gt; {\n            let imageUrl = value == \"male\" ? \n                \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM_MvbRXood7sNkM9z5OEVk_AeIhmWwLon1vvBuIYjOpCD394wNGdoAYloymicchUpgZU&usqp=CAU\" : \n                \"https://static1.purebreak.com/articles/4/18/97/24/@/705016-titanic-decouvrez-quelle-autre-actrice-diapo-3.jpg\";\n            return html`&lt;div style=\"text-align: center;\"&gt;\n                            &lt;span style=\"display: block; text-transform: capitalize;\"&gt;${value == \"male\" ? \"Jake\" : \"Rose\"}&lt;/span&gt;\n                            &lt;img src=\"${imageUrl}\" style=\"width: 200px; height: auto; display: block; margin: 0 auto;\"&gt;\n                        &lt;/div&gt;`;\n        }\n    }\n)\nviewof age = Inputs.range([0, 100], {step: 1, value: 19, label: \"Âge au moment de l'accident\"})\nviewof class_boat = Inputs.radio(\n    new Map([[\"Première\", 1], [\"Deuxième\", 2], [\"Troisième\", 3]]),\n    {value: default_class, label: \"Classe sur le bateau\"}\n)\nPrédiction de notre modèle:\nd3.json(prediction)\nprediction = `https://titanic.kub.sspcloud.fr/predict?pclass=${class_boat}&sex=${gender}&age=${age}&sib_sp=1&parch=1&fare=16.5&embarked=S&title=${title}&has_cabin=1&ticket_len=7`\ntitle = gender == \"male\" ? \"Mr.\" : \"Miss.\"\ndefault_class = gender == \"male\" ? 3 : 1"
+  },
+  {
+    "objectID": "index.html#documentation-de-lapi",
+    "href": "index.html#documentation-de-lapi",
+    "title": "Jake avait-il une chance de survivre ?",
+    "section": "Documentation de l’API",
+    "text": "Documentation de l’API\nRetrouver l’API sur https://titanic.kub.sspcloud.fr/docs pour jouer avec d’autres exemples."
   }
 ]
