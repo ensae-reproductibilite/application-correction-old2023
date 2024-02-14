@@ -7,6 +7,7 @@ Prediction de la survie d'un individu sur le Titanic
 import argparse
 from sklearn.metrics import confusion_matrix
 from joblib import dump
+from sklearn.model_selection import GridSearchCV
 
 import src.data.import_data as imp
 import src.features.build_features as bf
@@ -59,9 +60,27 @@ X_test, y_test = test.drop("Survived", axis="columns"), test["Survived"]
 
 # MODELISATION: RANDOM FOREST ----------------------------
 
-pipe = te.build_pipeline(n_trees=N_TREES)
+pipe = te.build_pipeline(
+    n_trees=N_TREES, categorical_features=["Embarked", "Sex"])
 
-pipe.fit(X_train, y_train)
+param_grid = {
+    "classifier__n_estimators": [10, 20, 50],
+    "classifier__max_leaf_nodes": [5, 10, 50]
+}
+
+
+pipe_cross_validation = GridSearchCV(pipe, 
+                         param_grid=param_grid, 
+                         scoring=["accuracy", "precision", "recall", "f1"],
+                         refit="f1",
+                         cv=5, 
+                         n_jobs=5, 
+                         verbose=1)
+
+
+pipe_cross_validation.fit(X_train, y_train)
+pipe = pipe_cross_validation.best_estimator_
+
 
 
 # EVALUATE ----------------------------

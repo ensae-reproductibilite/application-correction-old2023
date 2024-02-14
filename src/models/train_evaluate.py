@@ -27,7 +27,10 @@ def split_train_test_titanic(data: pd.DataFrame, fraction_test: float = 0.1):
     return train, test
 
 
-def build_pipeline(n_trees: int = 20):
+def build_pipeline(
+    n_trees: int = 20,
+    numeric_features=["Age", "Fare"],
+    categorical_features=["Title", "Embarked", "Sex"]):
     """Random forest model for Titanic survival
 
     Args:
@@ -36,9 +39,6 @@ def build_pipeline(n_trees: int = 20):
     Returns:
         _type_: _description_
     """
-
-    numeric_features = ["Age", "Fare"]
-    categorical_features = ["Title", "Embarked", "Sex"]
 
     numeric_transformer = Pipeline(
         steps=[
