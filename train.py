@@ -12,7 +12,7 @@ from sklearn.model_selection import GridSearchCV
 import src.data.import_data as imp
 import src.features.build_features as bf
 import src.models.train_evaluate as te
-import src.models.log as tl
+
 
 # PARAMETRES -------------------------------
 
