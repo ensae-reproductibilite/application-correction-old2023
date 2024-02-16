@@ -50,11 +50,7 @@ d3.json(prediction)
 ```
 
 ```{ojs}
-prediction = `https://titanic.kub.sspcloud.fr/predict?pclass=${class_boat}&sex=${gender}&age=${age}&sib_sp=1&parch=1&fare=16.5&embarked=S&title=${title}&has_cabin=1&ticket_len=7`
-```
-
-```{ojs}
-title = gender == "male" ? "Mr." : "Miss."
+prediction = `https://titanic.kub.sspcloud.fr/predict?pclass=${class_boat}&sex=${gender}&age=${age}&sib_sp=1&parch=1&fare=16.5&embarked=S&has_cabin=1&ticket_len=7`
 ```
 
 ```{ojs}
