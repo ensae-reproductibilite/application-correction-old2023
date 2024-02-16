@@ -11,6 +11,7 @@ from sklearn.model_selection import GridSearchCV
 
 import src.data.import_data as imp
 import src.features.build_features as bf
+import src.models.log as mlog
 import src.models.train_evaluate as te
 
 
@@ -83,8 +84,10 @@ pipe_cross_validation = GridSearchCV(
     verbose=1,
 )
 
-
 pipe_cross_validation.fit(X_train, y_train)
+
+mlog.log_gsvc_to_mlflow(pipe_cross_validation, EXPERIMENT_NAME, APPLI_ID)
+
 pipe = pipe_cross_validation.best_estimator_
 
 dump(pipe, "model.joblib")
