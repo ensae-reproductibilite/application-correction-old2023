@@ -36,7 +36,6 @@ async def predict(
     parch: int = 1,
     fare: float = 16.5,
     embarked: str = "S",
-    title: str = "Miss.",
     has_cabin: int = 1,
     ticket_len: int = 7
 ) -> str:
@@ -52,7 +51,6 @@ async def predict(
             "parch": [parch],
             "Fare": [fare],
             "Embarked": [embarked],
-            "Title": [title],
             "hasCabin": [has_cabin],
             "Ticket_Len": [ticket_len] 
         }
