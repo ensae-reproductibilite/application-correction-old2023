@@ -87,6 +87,4 @@ pipe_cross_validation = GridSearchCV(
 pipe_cross_validation.fit(X_train, y_train)
 pipe = pipe_cross_validation.best_estimator_
 
-tl.log_gsvc_to_mlflow(pipe_cross_validation, EXPERIMENT_NAME, APPLI_ID)
-
 dump(pipe, "model.joblib")
