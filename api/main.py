@@ -4,18 +4,15 @@ from fastapi import FastAPI
 from joblib import load
 
 import pandas as pd
+import mlflow
 
 # GET PRODUCTION MODEL -------------
 
-username_sspcloud = "lgaliana"
-url = f"https://minio.lab.sspcloud.fr/{username_sspcloud}/ensae-reproductibilite/model/model.joblib"
-local_filename = "model.joblib"
 
-with open(local_filename, mode = "wb") as file:
-    file.write(requests.get(url).content)
+model_name = "titanic"
+model_version = 1
 
-
-model = load(local_filename)
+model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_version}")
 
 
 # USE PRODUCTION MODEL IN APP ----------
