@@ -1,21 +1,32 @@
+# Creating MLflow deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: titanic-deployment
-  labels:
-    app: titanic
+  name: codification-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: titanic
+      app: codification-api
   template:
     metadata:
       labels:
-        app: titanic
+        app: codification-api
     spec:
       containers:
-      - name: titanic
-        image: linogaliana/application-correction:v0.0.6
-        ports:
-        - containerPort: 5000
+        - name: api
+          image: linogaliana/application-correction:v0.0.6
+          imagePullPolicy: Always
+          env:
+            - name: MLFLOW_TRACKING_URI
+              value: https://user-lgaliana-mlflow.user.lab.sspcloud.fr
+            - name: MLFLOW_MODEL_NAME
+              value: titanic
+            - name: MLFLOW_MODEL_VERSION
+              value: "1"
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+
+
