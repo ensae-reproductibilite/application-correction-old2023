@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: codification-api
+  name: titanicml
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: codification-api
+      app: titanicml
   template:
     metadata:
       labels:
-        app: codification-api
+        app: titanicml
     spec:
       containers:
         - name: api
