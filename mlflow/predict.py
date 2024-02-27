@@ -5,7 +5,9 @@ import pandas as pd
 model_name = "titanic"
 model_version = 1
 
-loaded_model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_version}")
+loaded_model = mlflow.pyfunc.load_model(
+    model_uri=f"models:/{model_name}/{model_version}"
+    )
 
 
 def create_data(
