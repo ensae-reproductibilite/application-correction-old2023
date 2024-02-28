@@ -31,6 +31,7 @@ def build_pipeline(
     n_trees: int = 20,
     numeric_features=["Age", "Fare"],
     categorical_features=["Title", "Embarked", "Sex"],
+    max_depth=None, max_features="sqrt"
 ):
     """Random forest model for Titanic survival
 
@@ -69,7 +70,7 @@ def build_pipeline(
     pipe = Pipeline(
         [
             ("preprocessor", preprocessor),
-            ("classifier", RandomForestClassifier(n_estimators=n_trees)),
+            ("classifier", RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, max_features=max_features)),
         ]
     )
 
