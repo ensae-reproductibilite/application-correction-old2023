@@ -1,0 +1,73 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: titanic-training-workflow-
+spec:
+  entrypoint: main
+  arguments:
+    parameters:
+      # The MLflow tracking server is responsible to log the hyper-parameter and model metrics.
+      - name: mlflow-tracking-uri
+        value: https://user-lgaliana-argo-workflows.user.lab.sspcloud.fr #<1>
+      - name: mlflow-experiment-name
+        value: titanicml #<2>
+      - name: model-training-conf-list
+        value: |
+          [
+            { "n_trees": 25, "max_depth": 10, "max_features": "sqrt" },
+            { "n_trees": 50, "max_depth": 5, "max_features": "sqrt" },
+            { "n_trees": 100, "max_depth": 25, "max_features": "sqrt" }
+          ]
+  templates:
+    # Entrypoint DAG template
+    - name: main
+      dag:
+        tasks:
+          # Task 0: Start pipeline
+          - name: start-pipeline
+            template: start-pipeline-wt
+          # Task 1: Train model with given params
+          - name: train-model-with-params
+            dependencies: [ start-pipeline ]
+            template: run-model-training-wt
+            arguments:
+              parameters:
+                - name: n_trees
+                  value: "{{item.n_trees}}"
+                - name: max_depth
+                  value: "{{item.max_depth}}"
+                - name: max_features
+                  value: "{{item.max_features}}"
+            # Pass the inputs to the task using "withParam"
+            withParam: "{{workflow.parameters.model-training-conf-list}}"
+
+    # Now task container templates are defined
+    # Worker template for task 0 : start-pipeline
+    - name: start-pipeline-wt
+      inputs:
+      container:
+        image: busybox
+        command: [ sh, -c ]
+        args: [ "echo Starting pipeline" ]
+
+    # Worker template for task-1 : train model with params
+    - name: run-model-training-wt
+      inputs:
+        parameters:
+          - name: n_trees
+          - name: max_depth
+          - name: max_features
+      container:
+        image: linogaliana/application-correction:main
+        imagePullPolicy: Always
+        command: [sh, -c]
+        args: ["python train.py
+                    --n_trees {{inputs.parameters.n_trees}}
+                    --max_depth {{inputs.parameters.max_depth}}
+                    --max_features {{inputs.parameters.max_features}}
+                "]
+        env:
+          - name: MLFLOW_TRACKING_URI
+            value: "{{workflow.parameters.mlflow-tracking-uri}}"
+          - name: MLFLOW_EXPERIMENT_NAME
+            value: "{{workflow.parameters.mlflow-experiment-name}}"
