@@ -1,6 +1,11 @@
 name: Construction image Docker
 
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+      - dev
+    tags:
 
 jobs:
   docker:
@@ -12,6 +17,14 @@ jobs:
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: linogaliana/application-correction
+
       -
         name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -23,4 +36,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: linogaliana/application-correction:v0.0.2
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
