@@ -21,7 +21,7 @@ def show_welcome_page():
     """
 
     return {
-        "Message": "Démonstration API",
+        "Message": "Bonjour  !",
         "Model_name": 'Titanic ML',
         "Model_version": "0.1",
     }
